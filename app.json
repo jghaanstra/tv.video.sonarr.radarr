@@ -1,5 +1,6 @@
 {
 	"id": "tv.video.sonarr.radarr",
+    "sdk": 2,
 	"name": {
 		"en": "Sonarr and Radarr",
 		"nl": "Sonarr and Radarr"
@@ -8,12 +9,21 @@
 		"en": [ "Sonarr", "Radarr", "tv shows", "movies", "download" ],
 		"nl": [ "Sonarr", "Radarr", "tv series", "films", "download" ]
 	},
-	"version": "1.1.4",
+	"version": "2.0.0",
 	"compatibility": "0.x || 1.x",
 	"author": {
 		"name": "Jelger Haanstra",
-		"email": "homey@solidewebservices.com"
+		"email": "homey@solidewebservices.com",
+        "website": "https://github.com/jghaanstra/tv.video.sonarr.radarr"
 	},
+    "contributing": {
+        "donate": {
+            "paypal": {
+                "email": "paypal@solidewebservices.com",
+                "currency": "EUR"
+            }
+        }
+    },
     "images": {
         "large": "./assets/images/large.jpg",
         "small": "./assets/images/small.jpg"

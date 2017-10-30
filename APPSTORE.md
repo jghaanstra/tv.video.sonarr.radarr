@@ -17,6 +17,9 @@ For Homey to be able to receive updates from Sonarr and Radarr these application
     * URL for Radarr: http(s)://yourip-or-homey-url/api/app/tv.video.sonarr.radarr/radarr/ where you add the local IP of Homey (if on the same network as Radarr) or the external cloud URL of Homey
     * Method: POST
 
+## Support topic
+For support please use the official support topic on the forum [here](https://forum.athom.com/discussion/3333/).
+
 ## Supported Cards
 ### Sonarr
 * [TRIGGER] Episode grabbed (tokens for serie, season, episode and title)
@@ -33,11 +36,10 @@ For Homey to be able to receive updates from Sonarr and Radarr these application
 * [ACTION] Let Homey speak upcoming movies from the Radarr calendar within the selected weeks
 * [ACTION] Refresh movies information from TMDb and rescan disks.
 
-## Donate
-Donating is completely optional.
-[![Donate](https://www.paypalobjects.com/webstatic/en_US/i/btn/png/btn_donate_92x26.png)](https://paypal.me/jghaanstra)
-
 ## Changelog
+### 2017-10-30 -- v2.0.0
+* NEW: rewrite for SDK2
+
 ### 2017-08-02 -- v1.1.4
 * FIX: fix for issue with the Radarr webhook (credits to rvmourik)
 
