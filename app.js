@@ -15,19 +15,15 @@ class SonarrRadarrApp extends Homey.App {
             .registerRunListener((args, state) => {
                 util.addMedia(args, 'movie')
                     .then(result => {
-                        return Promise.resolve(result);
+                        return Promise.resolve(true);
                     })
                     .catch(error => {
-                        return Promise.reject(error);
+                        return Promise.resolve(false);
                     })
             })
             .getArgument('quality')
             .registerAutocompleteListener((query, args) => {
-                util.qualityProfile(args.device.getSetting('address'), args.device.getSetting('port'), args.device.getSetting('apikey'), 'radarr')
-                    .then(result => {
-                        return result;
-                    })
-
+                return util.qualityProfile(args.device.getSetting('address'), args.device.getSetting('port'), args.device.getSetting('apikey'), 'radarr');
             })
 
         new Homey.FlowCardAction('radarr_calendar')
@@ -71,25 +67,48 @@ class SonarrRadarrApp extends Homey.App {
                     })
             })
 
-
-        // SONARR AUTOCOMPLETE
-        new Homey.FlowCardAction('sonarr_add')
+        new Homey.FlowCardAction('radarr_history')
             .register()
             .registerRunListener((args, state) => {
-                util.addMedia(args, 'series')
+                util.history(args)
                     .then(result => {
-                        return Promise.resolve(result);
+                        var data = JSON.parse(result);
+                        var items = data.records;
+                        if (items.length > 0) {
+                            Homey.ManagerSpeechOutput.say(Homey.__("Recently grabbed movies are"));
+
+                            items.forEach( function(item) {
+                                var title = item.movie.title;
+                                var grabdate = item.date;
+                                var grabdateFiltered = grabdate.substring(0,10);
+
+                                Homey.ManagerSpeechOutput.say(Homey.__(", downloaded on", { "title": title, "grabdate": grabdateFiltered }));
+                            });
+                        } else {
+                            Homey.ManagerSpeechOutput.say(Homey.__("No episodes found"));
+                        }
+                        return Promise.resolve();
                     })
                     .catch(error => {
                         return Promise.reject(error);
                     })
             })
+
+        // SONARR ACTION CARDS
+        new Homey.FlowCardAction('sonarr_add')
+            .register()
+            .registerRunListener((args, state) => {
+                util.addMedia(args, 'series')
+                    .then(result => {
+                        return Promise.resolve(true);
+                    })
+                    .catch(error => {
+                        return Promise.resolve(false);
+                    })
+            })
             .getArgument('quality')
             .registerAutocompleteListener((query, args) => {
-                util.qualityProfile(args.device.getSetting('address'), args.device.getSetting('port'), args.device.getSetting('apikey'), 'sonarr')
-                    .then(result => {
-                        return result;
-                    })
+                return util.qualityProfile(args.device.getSetting('address'), args.device.getSetting('port'), args.device.getSetting('apikey'), 'sonarr');
             })
 
         new Homey.FlowCardAction('sonarr_calendar')
@@ -153,6 +172,36 @@ class SonarrRadarrApp extends Homey.App {
                             });
                         } else {
                             Homey.ManagerSpeechOutput.say(Homey.__("No current downloads"));
+                        }
+                        return Promise.resolve();
+                    })
+                    .catch(error => {
+                        return Promise.reject(error);
+                    })
+            })
+
+        new Homey.FlowCardAction('sonarr_history')
+            .register()
+            .registerRunListener((args, state) => {
+                util.history(args)
+                    .then(result => {
+                        var data = JSON.parse(result);
+                        var items = data.records;
+                        if (items.length > 0) {
+                            Homey.ManagerSpeechOutput.say(Homey.__("Recently grabbed episodes are"));
+
+                            items.forEach( function(item) {
+                                var serie = item.series.title;
+                                var season = item.episode.seasonNumber;
+                                var episodenumber = item.episode.episodeNumber;
+                                var title = item.episode.title;
+                                var grabdate = item.date;
+                                var grabdateFiltered = grabdate.substring(0,10);
+
+                                Homey.ManagerSpeechOutput.say(Homey.__(", season episode titled with grabdate", { "serie": serie, "season": season, "episode": episodenumber, "title": title, "grabdate": grabdateFiltered }));
+                            });
+                        } else {
+                            Homey.ManagerSpeechOutput.say(Homey.__("No episodes found"));
                         }
                         return Promise.resolve();
                     })

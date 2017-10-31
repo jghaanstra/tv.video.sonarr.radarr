@@ -26,6 +26,7 @@ For support please use the official support topic on the forum [here](https://fo
 * [TRIGGER] Episode downloaded (tokens for serie, season, episode and title)
 * [ACTION] Add series to the Sonarr library through voice and with a selected quality profile.
 * [ACTION] Let Homey speak upcoming episodes from the Sonarr calendar within the selected weeks
+* [ACTION] Let Homey speak recently grabbed episodes
 * [ACTION] Let Homey speak currently downloading episodes
 * [ACTION] Refresh series information from trakt and rescan disks.
 
@@ -34,11 +35,14 @@ For support please use the official support topic on the forum [here](https://fo
 * [TRIGGER] Episode downloaded (tokens for serie, season, episode and title)
 * [ACTION] Add movies to the Radarr library through voice and with a selected quality profile.
 * [ACTION] Let Homey speak upcoming movies from the Radarr calendar within the selected weeks
+* [ACTION] Let Homey speak recently grabbed movies
 * [ACTION] Refresh movies information from TMDb and rescan disks.
 
 ## Changelog
-### 2017-10-30 -- v2.0.0
+### 2017-10-31 -- v2.0.0
 * NEW: rewrite for SDK2
+* NEW: when adding series/movies by voice the app will now not pick the first result when there are more but will ask you to be more specific
+* NEW: added action card for speaking the latest 1 to 15 grabbed episodes (Sonarr) or movies (Radarr)
 
 ### 2017-08-02 -- v1.1.4
 * FIX: fix for issue with the Radarr webhook (credits to rvmourik)

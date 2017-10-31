@@ -14,7 +14,9 @@
     "Future episode are": "Future episode are",
     "Future movies are": "Future movies are",
     ", season episode titled with airdate": ", __serie__ season __season__ episode __episode__ titled __title__ with airdate __airdate__",
+    ", season episode titled with grabdate": ", __serie__ season __season__ episode __episode__ titled __title__ downloaded on __grabdate__",
     ", in cinemas on and released on": ", __title__ in cinemas on __cinema__ and released on __release__",
+    ", downloaded on": ", __title__ downloaded on __grabdate__",
     "No episodes found": "No episodes found",
     "No movies found": "No movies found",
     "Current downloads are": "Current downloads are",
@@ -25,5 +27,8 @@
     "The following series has been added": "The following series has been added",
     "The following movie has been added": "The following movie has been added",
     "Series not found, please try again": "Series not found, please try again",
-    "Movie not found, please try again": "Movie not found, please try again"  
+    "Movie not found, please try again": "Movie not found, please try again",
+    "More than one result": "More than one result, please be more specific. Retrieved results are",
+    "Recently grabbed episodes are": "Recently grabbed episodes are",
+    "Recently grabbed movies are": "Recently grabbed movies are"
 }

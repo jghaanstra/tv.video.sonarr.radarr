@@ -14,7 +14,9 @@
     "Future episode are": "Toekomstige afleveringen zijn",
     "Future movies are": "Toekomstige films zijn",
     ", season episode titled with airdate": ", __serie__ seizoen __season__ aflevering __episode__ getiteld __title__ met uitzenddatum __airdate__",
+    ", season episode titled with grabdate": ", __serie__ season __season__ episode __episode__ titled __title__ binnen gehaald op __grabdate__",
     ", in cinemas on and released on": ", __title__ in de bioscoop op __cinema__ en uitgebracht op __release__",
+    ", downloaded on": ", __title__ binnen gehaald op __grabdate__",
     "No episodes found": "Geen afleveringen gevonden",
     "No movies found": "Geen films gevonden",
     "Current downloads are": "Huidige downloads zijn",
@@ -25,5 +27,8 @@
     "The following series has been added": "De volgende serie is toegevoegd",
     "The following movie has been added": "De volgende film is toegevoegd",
     "Series not found, please try again": "Serie niet gevonden, probeer het nog eens",
-    "Movie not found, please try again": "Film niet gevonden, probeer het nog eens"
+    "Movie not found, please try again": "Film niet gevonden, probeer het nog eens",
+    "More than one result": "Meerdere resultaten, wees meer specifiek. Opgehaalde resultaten zijn",
+    "Recently grabbed episodes are": "Recent gedownloade afleveringen zijn",
+    "Recently grabbed movies are": "Recent binnen gehaalde films zijn"
 }

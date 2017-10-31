@@ -553,6 +553,70 @@
 						"filter": "driver_id=radarr"
 					}
 				]
+			},
+            {
+				"id": "sonarr_history",
+				"title": {
+					"en": "History",
+					"nl": "Geschiedenis"
+				},
+				"hint": {
+                    "en": "Let Homey speak the previously grabbed series.",
+					"nl": "Laat Homey de eerdere gedownloade series spreken."
+				},
+                "args": [
+                    {
+                        "name": "items",
+                        "type": "number",
+                        "min": 1,
+                        "max": 15,
+                        "placeholder": {
+							"en": "number of items",
+							"nl": "aantal entries"
+						}
+                    },
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Sonarr",
+							"nl": "Selecteer Sonarr"
+						},
+						"filter": "driver_id=sonarr"
+					}
+				]
+			},
+            {
+				"id": "radarr_history",
+				"title": {
+					"en": "History",
+					"nl": "Geschiedenis"
+				},
+				"hint": {
+                    "en": "Let Homey speak the previously grabbed movies.",
+					"nl": "Laat Homey de eerdere gedownloade films spreken."
+				},
+                "args": [
+                    {
+                        "name": "items",
+                        "type": "number",
+                        "min": 1,
+                        "max": 15,
+                        "placeholder": {
+							"en": "number of items",
+							"nl": "aantal entries"
+						}
+                    },
+					{
+						"name": "device",
+						"type": "device",
+						"placeholder": {
+							"en": "Select Radarr",
+							"nl": "Selecteer Radarr"
+						},
+						"filter": "driver_id=radarr"
+					}
+				]
 			}
         ]
     }
