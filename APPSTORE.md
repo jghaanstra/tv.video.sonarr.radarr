@@ -39,31 +39,10 @@ For support please use the official support topic on the forum [here](https://fo
 * [ACTION] Refresh movies information from TMDb and rescan disks.
 
 ## Changelog
+### 2018-01-14 -- v2.0.1
+* FIX: fixed issue with Radarr updates not triggering
+
 ### 2017-10-31 -- v2.0.0
 * NEW: rewrite for SDK2
 * NEW: when adding series/movies by voice the app will now not pick the first result when there are more but will ask you to be more specific
 * NEW: added action card for speaking the latest 1 to 15 grabbed episodes (Sonarr) or movies (Radarr)
-
-### 2017-08-02 -- v1.1.4
-* FIX: fix for issue with the Radarr webhook (credits to rvmourik)
-
-### 2017-07-17 -- v1.1.3
-* IMPROVEMENT: add even better error handling for the webhooks of Sonarr and Radarr
-* FIX: fix a small issue with the Radarr webhook
-
-### 2017-07-06 -- v1.1.2
-* IMPROVEMENT: add better error handling when adding webhooks in Radarr and Sonarr
-* FIX: updated api.js since Sonarr changed it webhook interface with Sonarr release 2.0.0.4855
-
-### 2017-06-22 -- v1.1.1
-* IMPROVEMENT: added leading zero to season and episode number tokens for Sonarr trigger cards
-* FIX: fixed an error which causes the app to crash in the speech handling part of the add cards for Sonarr and Radarr
-
-### 2017-06-18 -- v1.1.0
-IMPORTANT: this release requires you to re-pair your Sonarr and Radarr installation.
-* NEW: Added action cards for adding series and movies to Sonarr and Radarr through voice commands
-* IMPROVEMENT: Added check in API if incoming IP matches IP of Sonarr or Radarr device
-* FIX: fixed a type-o in the hint of the Sonarr calendar card
-
-### 2017-06-08 -- v1.0.0
-* Initial version

@@ -9,7 +9,7 @@
 		"en": [ "Sonarr", "Radarr", "tv shows", "movies", "download" ],
 		"nl": [ "Sonarr", "Radarr", "tv series", "films", "download" ]
 	},
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"compatibility": "0.x || 1.x",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -19,10 +19,12 @@
     "contributing": {
         "donate": {
             "paypal": {
-                "email": "paypal@solidewebservices.com",
-                "currency": "EUR"
+                "username": "jghaanstra"
             }
         }
+    },
+    "bugs": {
+        "url": "https://github.com/jghaanstra/tv.video.sonarr.radarr/issues"
     },
     "images": {
         "large": "./assets/images/large.jpg",
@@ -80,8 +82,10 @@
 				            "id": "port",
 				            "type": "number",
 				            "value": 8989,
-                            "min": 0,
-			                "max": 65535,
+                            "attr": {
+								"min": 0,
+								"max": 65535
+							},
 			                "step": 1,
 				            "label": {
 				                "en": "Port",

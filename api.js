@@ -49,10 +49,17 @@ module.exports = [
 
                 Object.keys(radarrs).forEach(function(key) {
             		if (radarrs[key].getSetting('address') == ipv4) {
-
-                        if (typeof args.body.Movie !== 'undefined') {
-                            var title = args.body.Movie.Title;
-                            var eventtype = args.body.EventType;
+                        if (typeof args.body.Movie !== 'undefined' || typeof args.body.movie !== 'undefined') {
+                            if (typeof args.body.Movie !== 'undefined') {
+                                var title = args.body.Movie.Title;
+                            } else {
+                                var title = args.body.movie.title;
+                            }
+                            if (typeof args.body.EventType !== 'undefined') {
+                                var eventtype = args.body.EventType;
+                            } else {
+                                var eventtype = args.body.eventType;
+                            }
 
                             if (eventtype == 'Grab') {
                                 Homey.ManagerFlow.getCard('trigger', 'grab_movie').trigger(radarrs[key], {title: title}, {});
