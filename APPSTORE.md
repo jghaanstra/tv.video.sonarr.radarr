@@ -39,6 +39,9 @@ For support please use the official support topic on the forum [here](https://fo
 * [ACTION] Refresh movies information from TMDb and rescan disks.
 
 ## Changelog
+### 2018-04-26 -- v2.0.2
+* UPDATE: updated dependencies to fix security issue in on of the packages, no functionality changes
+
 ### 2018-01-14 -- v2.0.1
 * FIX: fixed issue with Radarr updates not triggering
 
