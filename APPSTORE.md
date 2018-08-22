@@ -18,7 +18,7 @@ For Homey to be able to receive updates from Sonarr and Radarr these application
     * Method: POST
 
 ## Support topic
-For support please use the official support topic on the forum [here](https://forum.athom.com/discussion/3333/).
+For support please use the official support topic on the forum [here](https://community.athom.com/t/120).
 
 ## Supported Cards
 ### Sonarr
@@ -39,13 +39,6 @@ For support please use the official support topic on the forum [here](https://fo
 * [ACTION] Refresh movies information from TMDb and rescan disks.
 
 ## Changelog
-### 2018-04-26 -- v2.0.2
-* UPDATE: updated dependencies to fix security issue in on of the packages, no functionality changes
-
-### 2018-01-14 -- v2.0.1
-* FIX: fixed issue with Radarr updates not triggering
-
-### 2017-10-31 -- v2.0.0
-* NEW: rewrite for SDK2
-* NEW: when adding series/movies by voice the app will now not pick the first result when there are more but will ask you to be more specific
-* NEW: added action card for speaking the latest 1 to 15 grabbed episodes (Sonarr) or movies (Radarr)
+### 2018-08-22 - v2.0.3
+* UPDATE: updated app manifest to include id of new forum support topic
+* UPDATE: updated node packages to latest versions

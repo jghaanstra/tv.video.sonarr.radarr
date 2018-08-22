@@ -9,7 +9,7 @@
 		"en": [ "Sonarr", "Radarr", "tv shows", "movies", "download" ],
 		"nl": [ "Sonarr", "Radarr", "tv series", "films", "download" ]
 	},
-	"version": "2.0.2",
+	"version": "2.0.3",
 	"compatibility": "0.x || 1.x",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -27,6 +27,7 @@
         "url": "https://github.com/jghaanstra/tv.video.sonarr.radarr/issues"
     },
     "athomForumDiscussionId": 3333,
+    "homeyCommunityTopicId": 120,
     "images": {
         "large": "./assets/images/large.jpg",
         "small": "./assets/images/small.jpg"
