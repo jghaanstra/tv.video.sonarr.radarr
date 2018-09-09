@@ -3,77 +3,77 @@
 Homey.setTitle( __('pair.title') );
 
 $(function() {
-    $('#test-connection').click(function() {
-        $('.radarr-test').hide();
-        $('.radarr-ok').hide();
-        $('.radarr-error').hide();
+  $('#test-connection').click(function() {
+    $('.radarr-test').hide();
+    $('.radarr-ok').hide();
+    $('.radarr-error').hide();
 
 		var inputaddress = $('#address').val();
-        var inputport = Number($('#port').val());
+    var inputport = Number($('#port').val());
 		var inputapikey = $('#apikey').val();
 
-        if( inputaddress != '' && inputport != '' && inputapikey != '') {
-            var device_data = {
-                address: inputaddress,
-                port: inputport,
-                apikey: inputapikey
-            };
+    if( inputaddress != '' && inputport != '' && inputapikey != '') {
+      var device_data = {
+        address: inputaddress,
+        port: inputport,
+        apikey: inputapikey
+      };
 
-            Homey.emit('testConnection', device_data, function(error, result) {
-                if(error) {
-                    $('.radarr-error').show();
-                    $('.radarr-error-msg').html(error);
-                } else {
-                    var data = JSON.parse(result);
-                    $('#rootfolder').val(data[0].path);
-                    $('.radarr-test').show();
-                    $('#connect').prop('disabled', false);
-                }
-            });
+      Homey.emit('testConnection', device_data, function(error, result) {
+        if(error) {
+          $('.radarr-error').show();
+          $('.radarr-error-msg').html(error);
         } else {
-            $('.radarr-error').show();
-            $('.radarr-error-msg').html( __('pair.nosettings') );
+          var data = JSON.parse(result);
+          $('#rootfolder').val(data[0].path);
+          $('.radarr-test').show();
+          $('#connect').prop('disabled', false);
         }
+      });
+    } else {
+      $('.radarr-error').show();
+      $('.radarr-error-msg').html( __('pair.nosettings') );
+    }
 	});
 
 	$('#connect').click(function() {
 		var inputaddress = $('#address').val();
-        var inputport = Number($('#port').val());
+    var inputport = Number($('#port').val());
 		var inputapikey = $('#apikey').val();
-        var inputrootfolder = $('#rootfolder').val();
+    var inputrootfolder = $('#rootfolder').val();
 
-        if( inputaddress != '' && inputport != '' && inputapikey != '') {
-            var device_data = {
-                id: inputapikey
-            };
-            var settings = {
-                address: inputaddress,
-                port: inputport,
-                apikey: inputapikey,
-                rootfolder: inputrootfolder
-            };
+    if( inputaddress != '' && inputport != '' && inputapikey != '') {
+      var device_data = {
+        id: inputapikey
+      };
+      var settings = {
+        address: inputaddress,
+        port: inputport,
+        apikey: inputapikey,
+        rootfolder: inputrootfolder
+      };
 
-            Homey.addDevice({
-                name  	 : 'Radarr',
-                data 	 : device_data,
-                settings : settings
-            }, function(error, result ) {
-                if (error) {
-                    $('.radarr-test').hide();
-                    $('.radarr-error').show();
-                    $('.radarr-error-msg').html( error.message || error.toString() );
-                }
-                $('.radarr-test').hide();
-                $('.radarr-ok').show();
-
-                Homey.done();
-            })
-
-        } else {
-            $('.radarr-test').hide();
-            $('.radarr-error').show();
-            $('.radarr-error-msg').html( __('pair.nosettings') );
+      Homey.addDevice({
+        name  	 : 'Radarr',
+        data 	 : device_data,
+        settings : settings
+      }, function(error, result ) {
+        if (error) {
+          $('.radarr-test').hide();
+          $('.radarr-error').show();
+          $('.radarr-error-msg').html( error.message || error.toString() );
         }
+        $('.radarr-test').hide();
+        $('.radarr-ok').show();
+
+        Homey.done();
+      })
+
+    } else {
+      $('.radarr-test').hide();
+      $('.radarr-error').show();
+      $('.radarr-error-msg').html( __('pair.nosettings') );
+    }
 
 	});
 })
@@ -83,19 +83,19 @@ $(function() {
 	.radarr-status {
 		display: none;
 	}
-    .form-group input[type="text"] {
-        width: 80% !important;
-    }
-    .buttons, .messages {
-        padding-top: 14px;
-    }
+  .form-group input[type="text"] {
+    width: 80% !important;
+  }
+  .buttons, .messages {
+    padding-top: 14px;
+  }
 </style>
 
 <p data-i18n="pair.intro">Enter the details of Radarr.</p>
 
 <div class="form-group">
-    <label for="address" data-i18n="pair.address">IP address</label>
-    <input type="text" class="form-control" id="address" placeholder="192.168.0.100">
+  <label for="address" data-i18n="pair.address">IP address</label>
+  <input type="text" class="form-control" id="address" placeholder="192.168.0.100">
 </div>
 <div class="form-group">
 	<label for="port" data-i18n="pair.port">Port</label>
@@ -107,12 +107,12 @@ $(function() {
 </div>
 <input type="hidden" id="rootfolder" value="">
 <div class="form-group buttons">
-    <button id="test-connection" class="button" data-i18n="pair.test">Test Connection</button>
-    <button id="connect" class="button" data-i18n="pair.connect" disabled>Connect</button>
+  <button id="test-connection" class="button" data-i18n="pair.test">Test Connection</button>
+  <button id="connect" class="button" data-i18n="pair.connect" disabled>Connect</button>
 </div>
 
 <div class="messages">
-    <p class="radarr-status radarr-test" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.testing">Connection test successfull, you can now connect Radarr.</span></p>
-    <p class="radarr-status radarr-ok" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.success">Radarr added succesfully.</span></p>
-    <p class="radarr-status radarr-error" style="color: #ff6300;"><i class="fa fa-times"></i> <span class="radarr-error-msg"></span></p>
+  <p class="radarr-status radarr-test" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.testing">Connection test successfull, you can now connect Radarr.</span></p>
+  <p class="radarr-status radarr-ok" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.success">Radarr added succesfully.</span></p>
+  <p class="radarr-status radarr-error" style="color: #ff6300;"><i class="fa fa-times"></i> <span class="radarr-error-msg"></span></p>
 </div>
