@@ -39,9 +39,5 @@ For support please use the official support topic on the forum [here](https://co
 * [ACTION] Refresh movies information from TMDb and rescan disks.
 
 ## Changelog
-### 2018-09-09 - v2.0.4
-* REFACTORING: switched from request node module to node-fetch (reduced footprint from 7,5MB to 400 kB)
-
-### 2018-08-22 - v2.0.3
-* UPDATE: updated app manifest to include id of new forum support topic
-* UPDATE: updated node packages to latest versions
+### v2.0.4 - 2018-12-14
+* FIX: update compatibility to enable install on Homey firmware v2.x
