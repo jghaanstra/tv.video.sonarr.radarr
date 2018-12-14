@@ -1,7 +1,7 @@
 {
 	"id": "tv.video.sonarr.radarr",
   "sdk": 2,
-  "brandColor": "#ffc331",
+  "brandColor": "#A27B1E",
 	"name": {
 		"en": "Sonarr and Radarr",
 		"nl": "Sonarr and Radarr"
