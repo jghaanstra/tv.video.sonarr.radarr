@@ -8,73 +8,63 @@ module.exports = [
 		path     : '/:source',
 		public   : true,
 		fn: function(args, callback) {
-    	var ipv4 = args.req.remoteAddress.match(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/g)[0];
 
       if (args.params.source == 'sonarr') {
         var sonarrs = Homey.ManagerDrivers.getDriver('sonarr').getDevices();
 
         Object.keys(sonarrs).forEach(function(key) {
-      		if (sonarrs[key].getSetting('address') == ipv4) {
+          if (typeof args.body.series !== 'undefined' && typeof args.body.episodes !== 'undefined') {
+            var serie = args.body.series.title;
+            var episodes = args.body.episodes;
+            var eventtype = args.body.eventType;
 
-            if (typeof args.body.series !== 'undefined' && typeof args.body.episodes !== 'undefined') {
-              var serie = args.body.series.title;
-              var episodes = args.body.episodes;
-              var eventtype = args.body.eventType;
+            episodes.forEach( function(episode) {
+              var season = addLeadingZero(episode.seasonNumber);
+              var episodenumber = addLeadingZero(episode.episodeNumber);
+              var title = episode.title;
 
-              episodes.forEach( function(episode) {
-                var season = addLeadingZero(episode.seasonNumber);
-                var episodenumber = addLeadingZero(episode.episodeNumber);
-                var title = episode.title;
+              if (eventtype == 'Grab') {
+                Homey.ManagerFlow.getCard('trigger', 'grab_episode').trigger(sonarrs[key], {serie: serie, season: season, episode: episodenumber, title: title}, {});
+                callback(null, true);
+              } else if (eventtype == 'Download' || eventtype == 'Test') {
+                Homey.ManagerFlow.getCard('trigger', 'download_episode').trigger(sonarrs[key], {serie: serie, season: season, episode: episodenumber, title: title}, {});
+                callback(null, true);
+              } else {
+                callback('Eventtype not supported', false);
+              }
 
-                if (eventtype == 'Grab') {
-                  Homey.ManagerFlow.getCard('trigger', 'grab_episode').trigger(sonarrs[key], {serie: serie, season: season, episode: episodenumber, title: title}, {});
-                  callback(null, true);
-                } else if (eventtype == 'Download' || eventtype == 'Test') {
-                  Homey.ManagerFlow.getCard('trigger', 'download_episode').trigger(sonarrs[key], {serie: serie, season: season, episode: episodenumber, title: title}, {});
-                  callback(null, true);
-                } else {
-                  callback('Eventtype not supported', false);
-                }
-
-              });
-            } else {
-              callback('Invalid response from Sonarr', false);
-            }
+            });
           } else {
-      			callback(null, 'Not authorised, incoming IP address ('+ ipv4 +') does not match Sonarr IP address ('+ sonarrs[key].getSetting('address') +')');
-      		}
+            callback('Invalid response from Sonarr', false);
+          }
       	});
       } else if (args.params.source == 'radarr') {
         var radarrs = Homey.ManagerDrivers.getDriver('radarr').getDevices();
 
         Object.keys(radarrs).forEach(function(key) {
-      		if (radarrs[key].getSetting('address') == ipv4) {
-            if (typeof args.body.Movie !== 'undefined' || typeof args.body.movie !== 'undefined') {
-              if (typeof args.body.Movie !== 'undefined') {
-                var title = args.body.Movie.Title;
-              } else {
-                var title = args.body.movie.title;
-              }
-              if (typeof args.body.EventType !== 'undefined') {
-                var eventtype = args.body.EventType;
-              } else {
-                var eventtype = args.body.eventType;
-              }
-
-              if (eventtype == 'Grab') {
-                Homey.ManagerFlow.getCard('trigger', 'grab_movie').trigger(radarrs[key], {title: title}, {});
-                callback(null, true);
-              } else if (eventtype == 'Download' || eventtype == 'Test') {
-                Homey.ManagerFlow.getCard('trigger', 'download_movie').trigger(radarrs[key], {title: title}, {});
-                callback(null, true);
-              } else {
-                callback('Eventtype not supported', false);
-              }
+          if (typeof args.body.Movie !== 'undefined' || typeof args.body.movie !== 'undefined') {
+            if (typeof args.body.Movie !== 'undefined') {
+              var title = args.body.Movie.Title;
             } else {
-              callback('Invalid response from Radarr', false);
+              var title = args.body.movie.title;
+            }
+            if (typeof args.body.EventType !== 'undefined') {
+              var eventtype = args.body.EventType;
+            } else {
+              var eventtype = args.body.eventType;
+            }
+
+            if (eventtype == 'Grab') {
+              Homey.ManagerFlow.getCard('trigger', 'grab_movie').trigger(radarrs[key], {title: title}, {});
+              callback(null, true);
+            } else if (eventtype == 'Download' || eventtype == 'Test') {
+              Homey.ManagerFlow.getCard('trigger', 'download_movie').trigger(radarrs[key], {title: title}, {});
+              callback(null, true);
+            } else {
+              callback('Eventtype not supported', false);
             }
           } else {
-            callback( null, 'Not authorised, incoming IP address ('+ ipv4 +') does not match Radarr IP address ('+ radarrs[key].getSetting('address') +')' );
+            callback('Invalid response from Radarr', false);
           }
         });
       } else {

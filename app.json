@@ -10,7 +10,7 @@
 		"en": [ "Sonarr", "Radarr", "tv shows", "movies", "download" ],
 		"nl": [ "Sonarr", "Radarr", "tv series", "films", "download" ]
 	},
-	"version": "2.0.5",
+	"version": "2.0.6",
 	"compatibility": ">=1.5.12",
 	"author": {
 		"name": "Jelger Haanstra",

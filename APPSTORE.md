@@ -39,5 +39,5 @@ For support please use the official support topic on the forum [here](https://co
 * [ACTION] Refresh movies information from TMDb and rescan disks.
 
 ## Changelog
-### v2.0.4 - 2018-12-14
-* FIX: update compatibility to enable install on Homey firmware v2.x
+### v2.0.6 - 2018-12-28
+* FIX: removed incoming IP address security validation in api.js due to Athom removing the request object in firmware 2.x
