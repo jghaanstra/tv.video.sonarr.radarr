@@ -10,8 +10,8 @@
 		"en": [ "Sonarr", "Radarr", "tv shows", "movies", "download" ],
 		"nl": [ "Sonarr", "Radarr", "tv series", "films", "download" ]
 	},
-	"version": "2.0.7",
-	"compatibility": ">=2.0.0",
+	"version": "2.0.8",
+	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
 		"email": "homey@solidewebservices.com",
@@ -27,16 +27,17 @@
   "bugs": {
     "url": "https://github.com/jghaanstra/tv.video.sonarr.radarr/issues"
   },
-  "athomForumDiscussionId": 3333,
   "homeyCommunityTopicId": 120,
+  "source": "https://github.com/jghaanstra/tv.video.sonarr.radarr",
+  "homepage": "https://community.athom.com/t/120",
   "images": {
     "large": "./assets/images/large.jpg",
     "small": "./assets/images/small.jpg"
   },
 	"category": "internet",
 	"description": {
-		"en": "Control Sonarr and Radarr download software",
-		"nl": "Bestuur Sonarr en Radarr download software"
+		"en": "Control Sonarr and Radarr download software using Homey",
+		"nl": "Bedien Sonarr en Radarr download software met Homey"
 	},
 	"dependencies": {
 		"net": "*"
