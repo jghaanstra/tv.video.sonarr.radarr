@@ -1,0 +1,133 @@
+<script type="text/javascript">
+
+Homey.setTitle( __('pair.title') );
+
+$(function() {
+  $('#test-connection').click(function() {
+    $('.lidarr-test').hide();
+    $('.lidarr-ok').hide();
+    $('.lidarr-error').hide();
+
+		var inputaddress = $('#address').val();
+		var inputport = Number($('#port').val());
+    var inputapikey = $('#apikey').val();
+
+    if( inputaddress != '' && inputport != '' && inputapikey != '') {
+      var device_data = {
+        address: inputaddress,
+        port: inputport,
+        apikey: inputapikey
+      };
+
+      Homey.emit('testConnection', device_data, function(error, result) {
+        if(error) {
+          $('.lidarr-error').show();
+          $('.lidarr-error-msg').html(error);
+        } else {
+          var data = JSON.parse(result);
+          $('#rootfolder').val(data[0].path);
+          $('.lidarr-test').show();
+          $('#connect').prop('disabled', false);
+        }
+      });
+    } else {
+      $('.lidarr-error').show();
+      $('.lidarr-error-msg').html( __('pair.nosettings') );
+    }
+	});
+
+	$('#connect').click(function() {
+		var inputaddress = $('#address').val();
+    var inputport = Number($('#port').val());
+		var inputapikey = $('#apikey').val();
+    var inputrootfolder = $('#rootfolder').val();
+
+    if( inputaddress != '' && inputport != '' && inputapikey != '') {
+      var device_data = {
+        id: inputapikey
+      };
+      var settings = {
+        address: inputaddress,
+        port: inputport,
+        apikey: inputapikey,
+        rootfolder: inputrootfolder
+      };
+
+      Homey.addDevice({
+        name  	 : 'Lidarr',
+        data 	 : device_data,
+        settings : settings
+      }, function(error, result ) {
+        if (error) {
+          $('.lidarr-test').hide();
+          $('.lidarr-error').show();
+          $('.lidarr-error-msg').html( error.message || error.toString() );
+        }
+        $('.lidarr-test').hide();
+        $('.lidarr-ok').show();
+
+        Homey.done();
+      })
+
+    } else {
+      $('.lidarr-test').hide();
+      $('.lidarr-error').show();
+      $('.lidarr-error-msg').html( __('pair.nosettings') );
+    }
+
+	});
+})
+</script>
+
+<style type="text/css">
+  .form-group {
+    width: 100%;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .form-group label {
+    display: block;
+  }
+	.lidarr-status {
+		display: none;
+	}
+  .form-group input[type="text"] {
+    width: 80% !important;
+  }
+  .buttons, .messages {
+    padding-top: 14px;
+  }
+  .button:disabled {
+    color: #ccc;
+  }
+  .button:enabled {
+    background-color: #00c139 !important;
+    color: #fff;
+  }
+</style>
+
+<p data-i18n="pair.intro">Enter the details of Lidarr.</p>
+
+<div class="form-group">
+  <label for="address" data-i18n="pair.address">IP address</label>
+  <input type="text" class="form-control" id="address" placeholder="192.168.0.100">
+</div>
+<div class="form-group">
+	<label for="port" data-i18n="pair.port">Port</label>
+	<input type="number" class="form-control" id="port" placeholder="8989">
+</div>
+<div class="form-group">
+	<label for="apikey" data-i18n="pair.apikey">API Key</label>
+	<input type="text" class="form-control" id="apikey">
+</div>
+<input type="hidden" id="rootfolder" value="">
+<div class="form-group buttons">
+  <button id="test-connection" class="button" data-i18n="pair.test">Test Connection</button>
+  <button id="connect" class="button" data-i18n="pair.connect" disabled>Connect</button>
+</div>
+
+<div class="messages">
+  <p class="lidarr-status lidarr-test" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.testing">Connection test successfull, you can now connect lidarr.</span></p>
+  <p class="lidarr-status lidarr-ok" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.success">lidarr added succesfully.</span></p>
+  <p class="lidarr-status lidarr-error" style="color: #ff6300;"><i class="fa fa-times"></i> <span class="lidarr-error-msg"></span></p>
+</div>

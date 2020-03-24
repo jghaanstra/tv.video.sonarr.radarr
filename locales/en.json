@@ -1,14 +1,14 @@
 {
     "pair": {
-		"title": "Add Sonarr/Radarr",
+		"title": "Add Sonarr, Radarr or Lidarr",
         "nosettings": "Please fill in all the fields.",
-        "intro": "Enter the details of your Sonarr/Radarr device.",
+        "intro": "Enter the details of your Sonarr, Radarr or Lidarr device.",
         "address": "IP Address",
         "port": "Port",
         "apikey": "API Key",
-        "success": "Sonarr/Radarr added succesfully.",
+        "success": "Sonarr, Radarr of Lidarr added succesfully.",
         "test" : "Test Connection",
-        "testing" : "Connection test successfull, you can now connect Sonarr/Radarr.",
+        "testing" : "Connection test successfull, you can now connect Sonarr, Radarr or Lidarr.",
         "connect": "Connect"
 	},
     "Future episode are": "Future episode are",
@@ -24,10 +24,13 @@
     "Something went wrong": "Something went wrong",
     "What series do you want to add?": "What series do you want to add?",
     "What movie do you want to add?": "What movie do you want to add?",
+    "What album do you want to add?": "What album do you want to add?",
     "The following series has been added": "The following series has been added",
     "The following movie has been added": "The following movie has been added",
+    "The following album has been added": "The following album has been added",
     "Series not found, please try again": "Series not found, please try again",
     "Movie not found, please try again": "Movie not found, please try again",
+    "Album not found, please try again": "Album not found, please try again",
     "More than one result": "More than one result, please be more specific. Retrieved results are",
     "Recently grabbed episodes are": "Recently grabbed episodes are",
     "Recently grabbed movies are": "Recently grabbed movies are"

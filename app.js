@@ -7,9 +7,9 @@ class SonarrRadarrApp extends Homey.App {
 
   onInit() {
 
-    this.log('Initializing SonarrRadarr app ...');
+    this.log('Initializing SonarrRadarrLidarr app ...');
 
-    // RADARR ACTION CARDS
+    // RADARR FLOW CARDS
     new Homey.FlowCardAction('radarr_add')
       .register()
       .registerRunListener((args, state) => {
@@ -23,7 +23,7 @@ class SonarrRadarrApp extends Homey.App {
       })
       .getArgument('quality')
       .registerAutocompleteListener((query, args) => {
-        return util.qualityProfile(args.device.getSetting('address'), args.device.getSetting('port'), args.device.getSetting('apikey'), 'radarr');
+        return util.qualityProfile(args.device.getSetting('address'), args.device.getSetting('port'), '/api/profile', args.device.getSetting('apikey'), 'radarr');
       })
 
     new Homey.FlowCardAction('radarr_calendar')
@@ -94,7 +94,7 @@ class SonarrRadarrApp extends Homey.App {
           })
       })
 
-    // SONARR ACTION CARDS
+    // SONARR FLOW CARDS
     new Homey.FlowCardAction('sonarr_add')
       .register()
       .registerRunListener((args, state) => {
@@ -108,7 +108,7 @@ class SonarrRadarrApp extends Homey.App {
       })
       .getArgument('quality')
       .registerAutocompleteListener((query, args) => {
-        return util.qualityProfile(args.device.getSetting('address'), args.device.getSetting('port'), args.device.getSetting('apikey'), 'sonarr');
+        return util.qualityProfile(args.device.getSetting('address'), args.device.getSetting('port'), '/api/profile', args.device.getSetting('apikey'), 'sonarr');
       })
 
     new Homey.FlowCardAction('sonarr_calendar')
@@ -210,6 +210,7 @@ class SonarrRadarrApp extends Homey.App {
           })
       })
   }
+
 }
 
 module.exports = SonarrRadarrApp;

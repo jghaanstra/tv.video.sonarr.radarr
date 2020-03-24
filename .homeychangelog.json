@@ -1,5 +1,8 @@
 {
   "2.0.8": {
     "en": "Moved installation instructions from app store to community support topic."
+  },
+  "2.1.0": {
+    "en": "Add notification support for Lidarr"
   }
 }

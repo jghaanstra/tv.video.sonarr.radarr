@@ -7,7 +7,7 @@ class RadarrDriver extends Homey.Driver {
 
   onPair(socket) {
     socket.on('testConnection', function(data, callback ) {
-      util.rootFolder(data)
+      util.rootFolder(data, '/api/rootfolder')
         .then(result => {
           callback(null, result);
         })

@@ -67,6 +67,38 @@ module.exports = [
             callback('Invalid response from Radarr', false);
           }
         });
+      } else if (args.params.source == 'lidarr') {
+        var lidarrs = Homey.ManagerDrivers.getDriver('lidarr').getDevices();
+
+        Object.keys(lidarrs).forEach(function(key) {
+          if (typeof args.body.albums !== 'undefined' && typeof args.body.artist !== 'undefined') {
+            var artist = args.body.artist.name;
+            var eventtype = args.body.eventType;
+
+            if (eventtype == 'Grab') {
+              var albums = args.body.albums;
+              albums.forEach( function(album) {
+                var album_title = album.title;
+                var album_quality = album.quality;
+                Homey.ManagerFlow.getCard('trigger', 'grab_album').trigger(lidarrs[key], {artist: artist, album: album_title, quality: album_quality}, {});
+                callback(null, true);
+              });
+            } else if (eventtype == 'Download') {
+              var album_scenename = args.body.trackFiles[0].sceneName;
+              Homey.ManagerFlow.getCard('trigger', 'download_album').trigger(lidarrs[key], {artist: artist, album_scenename: album_scenename}, {});
+              callback(null, true);
+            } else if (eventtype == 'Test') {
+              var album_title = "Test Album";
+              var album_quality = "FLAC";
+              Homey.ManagerFlow.getCard('trigger', 'grab_album').trigger(lidarrs[key], {artist: artist, album: album_title, quality: album_quality}, {});
+              callback(null, true);
+            } else {
+              callback('Eventtype not supported', false);
+            }
+          } else {
+            callback('Invalid response from Lidarr', false);
+          }
+        });
       } else {
         callback('No valid source posted', false);
       }

@@ -3,11 +3,11 @@
 const Homey = require('homey');
 const util = require('/lib/util.js');
 
-class SonarrDriver extends Homey.Driver {
+class LidarrDriver extends Homey.Driver {
 
   onPair(socket) {
     socket.on('testConnection', function(data, callback ) {
-      util.rootFolder(data, '/api/rootfolder')
+      util.rootFolder(data, '/api/v1/rootfolder')
         .then(result => {
           callback(null, result);
         })
@@ -19,4 +19,4 @@ class SonarrDriver extends Homey.Driver {
 
 }
 
-module.exports = SonarrDriver;
+module.exports = LidarrDriver;

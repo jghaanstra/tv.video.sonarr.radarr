@@ -1,14 +1,14 @@
 {
     "pair": {
-		"title": "Sonarr/Radarr toevoegen",
+		"title": "Sonarr, Radarr of Lidarr toevoegen",
         "nosettings": "Vul a.u.b. alle velden in.",
-        "intro": "Vul de details van Sonarr/Radarr in.",
+        "intro": "Vul de details van Sonarr, Radarr of Lidarr in.",
         "address": "IP adres",
         "port": "Poort",
         "apikey": "API Key",
-        "success": "Sonarr/Radarr succesvol toegevoegd.",
+        "success": "Sonarr, Radarr of Lidarr succesvol toegevoegd.",
         "test" : "Test verbinding",
-        "testing" : "Connectie test succesvol, je kan Sonarr/Radarr nu verbinden.",
+        "testing" : "Connectie test succesvol, je kan Sonarr, Radarr of Lidarr nu verbinden.",
         "connect": "Verbind"
 	},
     "Future episode are": "Toekomstige afleveringen zijn",
@@ -24,10 +24,13 @@
     "Something went wrong": "Er is iets mis gegaan",
     "What series do you want to add?": "Welke serie wil je toevoegen?",
     "What movie do you want to add?": "Welke film wil je toevoegen?",
+    "What album do you want to add?": "Welk album wil je toevoegen?",
     "The following series has been added": "De volgende serie is toegevoegd",
     "The following movie has been added": "De volgende film is toegevoegd",
+    "The following album has been added": "Het volgende album is toegevoegd",
     "Series not found, please try again": "Serie niet gevonden, probeer het nog eens",
     "Movie not found, please try again": "Film niet gevonden, probeer het nog eens",
+    "Album not found, please try again": "Album niet gevonden, probeer het nog eens",
     "More than one result": "Meerdere resultaten, wees meer specifiek. Opgehaalde resultaten zijn",
     "Recently grabbed episodes are": "Recent gedownloade afleveringen zijn",
     "Recently grabbed movies are": "Recent binnen gehaalde films zijn"
