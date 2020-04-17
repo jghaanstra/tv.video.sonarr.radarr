@@ -10,7 +10,7 @@
 		"en": [ "Sonarr", "Radarr", "Lidarr", "tv shows", "movies", "download" ],
 		"nl": [ "Sonarr", "Radarr", "Lidarr", "tv series", "films", "download" ]
 	},
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"compatibility": ">=3.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -96,6 +96,15 @@
 				        "nl": "Poort"
 				      }
 				    },
+            {
+				      "id": "ssl",
+				      "type": "text",
+				      "value": "http://",
+				      "label": {
+				        "en": "Use HTTPS?",
+				        "nl": "Gebruik HTTPS?"
+				      }
+				    },
 				    {
 					    "id": "apikey",
 					    "type": "text",
@@ -156,6 +165,15 @@
 				        "nl": "Poort"
 				      }
 				    },
+            {
+				      "id": "ssl",
+				      "type": "text",
+				      "value": "http://",
+				      "label": {
+				        "en": "Use HTTPS?",
+				        "nl": "Gebruik HTTPS?"
+				      }
+				    },
 				    {
 					    "id": "apikey",
 					    "type": "text",
@@ -214,6 +232,15 @@
 				      "label": {
 				        "en": "Port",
 				        "nl": "Poort"
+				      }
+				    },
+            {
+				      "id": "ssl",
+				      "type": "text",
+				      "value": "http://",
+				      "label": {
+				        "en": "Use HTTPS?",
+				        "nl": "Gebruik HTTPS?"
 				      }
 				    },
 				    {

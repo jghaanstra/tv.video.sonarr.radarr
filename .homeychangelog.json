@@ -4,5 +4,8 @@
   },
   "2.1.0": {
     "en": "Add notification support for Lidarr"
+  },
+  "2.1.1": {
+    "en": "Add SSL (https) support for Sonarr, Radarr or Lidarr installations. Re-pair or edit device settings to enable."
   }
 }

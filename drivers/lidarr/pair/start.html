@@ -10,12 +10,14 @@ $(function() {
 
 		var inputaddress = $('#address').val();
 		var inputport = Number($('#port').val());
+    var inputssl = $('#ssl').is(":checked") ? 'https://' : 'http://';
     var inputapikey = $('#apikey').val();
 
     if( inputaddress != '' && inputport != '' && inputapikey != '') {
       var device_data = {
         address: inputaddress,
         port: inputport,
+        ssl: inputssl,
         apikey: inputapikey
       };
 
@@ -39,6 +41,7 @@ $(function() {
 	$('#connect').click(function() {
 		var inputaddress = $('#address').val();
     var inputport = Number($('#port').val());
+    var inputssl = $('#ssl').is(":checked") ? 'https://' : 'http://';
 		var inputapikey = $('#apikey').val();
     var inputrootfolder = $('#rootfolder').val();
 
@@ -49,6 +52,7 @@ $(function() {
       var settings = {
         address: inputaddress,
         port: inputport,
+        ssl: inputssl,
         apikey: inputapikey,
         rootfolder: inputrootfolder
       };
@@ -115,6 +119,10 @@ $(function() {
 <div class="form-group">
 	<label for="port" data-i18n="pair.port">Port</label>
 	<input type="number" class="form-control" id="port" placeholder="8989">
+</div>
+<div class="form-group">
+	<label for="ssl" data-i18n="pair.ssl">Use HTTPS?</label>
+	<input type="checkbox" class="form-control" id="ssl" value="false">
 </div>
 <div class="form-group">
 	<label for="apikey" data-i18n="pair.apikey">API Key</label>

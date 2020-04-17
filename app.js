@@ -23,7 +23,7 @@ class SonarrRadarrApp extends Homey.App {
       })
       .getArgument('quality')
       .registerAutocompleteListener((query, args) => {
-        return util.qualityProfile(args.device.getSetting('address'), args.device.getSetting('port'), '/api/profile', args.device.getSetting('apikey'), 'radarr');
+        return util.qualityProfile(args.device.getSetting('ssl'), args.device.getSetting('address'), args.device.getSetting('port'), '/api/profile', args.device.getSetting('apikey'), 'radarr');
       })
 
     new Homey.FlowCardAction('radarr_calendar')
@@ -87,7 +87,7 @@ class SonarrRadarrApp extends Homey.App {
             } else {
               Homey.ManagerSpeechOutput.say(Homey.__("No episodes found"));
             }
-            return Promise.resolve();
+            return Promise.resolve(true);
           })
           .catch(error => {
             return Promise.reject(error);
@@ -108,7 +108,7 @@ class SonarrRadarrApp extends Homey.App {
       })
       .getArgument('quality')
       .registerAutocompleteListener((query, args) => {
-        return util.qualityProfile(args.device.getSetting('address'), args.device.getSetting('port'), '/api/profile', args.device.getSetting('apikey'), 'sonarr');
+        return util.qualityProfile(args.device.getSetting('ssl'), args.device.getSetting('address'), args.device.getSetting('port'), '/api/profile', args.device.getSetting('apikey'), 'sonarr');
       })
 
     new Homey.FlowCardAction('sonarr_calendar')
@@ -132,7 +132,7 @@ class SonarrRadarrApp extends Homey.App {
             } else {
               Homey.ManagerSpeechOutput.say(Homey.__("No episodes found"));
             }
-            return Promise.resolve();
+            return Promise.resolve(true);
           })
           .catch(error => {
             return Promise.reject(error);
