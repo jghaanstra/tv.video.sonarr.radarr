@@ -1,213 +1,197 @@
-"use strict";
+'use strict';
 
 const Homey = require('homey');
-const util = require('/lib/util.js');
+const Util = require('/lib/util.js');
 
 class SonarrRadarrApp extends Homey.App {
 
   onInit() {
-
     this.log('Initializing SonarrRadarrLidarr app ...');
 
+    if (!this.util) this.util = new Util({homey: this.homey });
+
     // RADARR FLOW CARDS
-    new Homey.FlowCardAction('radarr_add')
-      .register()
-      .registerRunListener((args, state) => {
-        util.addMedia(args, 'movie')
-          .then(result => {
-            return Promise.resolve(true);
-          })
-          .catch(error => {
-            return Promise.resolve(false);
-          })
+    this.homey.flow.getActionCard('radarr_add')
+      .registerRunListener(async (args) => {
+        try {
+          const result = await this.util.addMedia(args, 'movie');
+          return Promise.resolve(true);
+        } catch (error) {
+          return Promise.resolve(error);
+        }
       })
       .getArgument('quality')
-      .registerAutocompleteListener((query, args) => {
-        return util.qualityProfile(args.device.getSetting('ssl'), args.device.getSetting('address'), args.device.getSetting('port'), '/api/profile', args.device.getSetting('apikey'), 'radarr');
+      .registerAutocompleteListener(async (query, args) => {
+        return await this.util.qualityProfile(args.device.getSetting('ssl'), args.device.getSetting('address'), args.device.getSetting('port'), '/api/profile', args.device.getSetting('apikey'), 'radarr');
       })
 
-    new Homey.FlowCardAction('radarr_calendar')
-      .register()
-      .registerRunListener((args, state) => {
-        util.calendar(args)
-          .then(result => {
-            var movies = JSON.parse(result);
-            if (movies.length > 0) {
-              Homey.ManagerSpeechOutput.say(Homey.__("Future movies are"));
+    this.homey.flow.getActionCard('radarr_calendar')
+      .registerRunListener(async (args) => {
+        try {
+          const result = await this.util.calendar(args);
+          let movies = JSON.parse(result);
+          if (movies.length > 0) {
+            this.homey.speechOutput.say(this.homey.__("app.future_movies"));
+            movies.forEach((movie) => {
+              var title = movie.title;
+              var cinemadate = movie.inCinemas;
+              var cinemadateFiltered = cinemadate.substring(0,10);
+              var releasedate = movie.physicalRelease;
+              var releasedateFiltered = releasedate.substring(0,10);
 
-              movies.forEach( function(movie) {
-                var title = movie.title;
-                var cinemadate = movie.inCinemas;
-                var cinemadateFiltered = cinemadate.substring(0,10);
-                var releasedate = movie.physicalRelease;
-                var releasedateFiltered = releasedate.substring(0,10);
-
-                Homey.ManagerSpeechOutput.say(Homey.__(", in cinemas on and released on", { "title": title, "cinema": cinemadateFiltered, "release": releasedateFiltered }));
-              });
-            } else {
-              Homey.ManagerSpeechOutput.say(Homey.__("No movies found"));
-            }
-            return Promise.resolve();
-          })
-          .catch(error => {
-            return Promise.reject(error);
-          })
+              this.homey.speechOutput.say(this.homey.__("app.in_cinema_released", { "title": title, "cinema": cinemadateFiltered, "release": releasedateFiltered }));
+            });
+          } else {
+            this.homey.speechOutput.say(this.homey.__("app.no_movies_found"));
+          }
+          return Promise.resolve(true);
+        } catch (error) {
+          return Promise.resolve(error);
+        }
       })
 
-    new Homey.FlowCardAction('radarr_refresh')
-      .register()
-      .registerRunListener((args, state) => {
-        var command = '{"name": "RefreshMovie"}';
-        util.command(args, command)
-          .then(result => {
-            return Promise.resolve(result);
-          })
-          .catch(error => {
-            return Promise.reject(error);
-          })
+    this.homey.flow.getActionCard('radarr_refresh')
+      .registerRunListener(async (args) => {
+        try {
+          let command = '{"name": "RefreshMovie"}';
+          const result = await this.util.sendCommand(args, command);
+          return Promise.resolve(true);
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
-    new Homey.FlowCardAction('radarr_history')
-      .register()
-      .registerRunListener((args, state) => {
-        util.history(args)
-          .then(result => {
+    this.homey.flow.getActionCard('radarr_history')
+      .registerRunListener(async (args) => {
+        try {
+          const result = await this.util.history(args);
+          if (result) {
             var data = JSON.parse(result);
             var items = data.records;
             if (items.length > 0) {
-              Homey.ManagerSpeechOutput.say(Homey.__("Recently grabbed movies are"));
-
-              items.forEach( function(item) {
+              this.homey.speechOutput.say(this.homey.__("app.recently_grabbed_movies"));
+              items.forEach((item) => {
                 var title = item.movie.title;
                 var grabdate = item.date;
                 var grabdateFiltered = grabdate.substring(0,10);
-
-                Homey.ManagerSpeechOutput.say(Homey.__(", downloaded on", { "title": title, "grabdate": grabdateFiltered }));
+                this.homey.speechOutput.say(this.homey.__("app.downloaded_on", { "title": title, "grabdate": grabdateFiltered }));
               });
             } else {
-              Homey.ManagerSpeechOutput.say(Homey.__("No episodes found"));
+              this.homey.speechOutput.say(this.homey.__("app.no_movies_found"));
             }
             return Promise.resolve(true);
-          })
-          .catch(error => {
-            return Promise.reject(error);
-          })
+          }
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
     // SONARR FLOW CARDS
-    new Homey.FlowCardAction('sonarr_add')
-      .register()
-      .registerRunListener((args, state) => {
-        util.addMedia(args, 'series')
-          .then(result => {
-            return Promise.resolve(true);
-          })
-          .catch(error => {
-            return Promise.resolve(false);
-          })
+    this.homey.flow.getActionCard('sonarr_add')
+      .registerRunListener(async (args) => {
+        try {
+          const result = await this.util.addMedia(args, 'series');
+          return Promise.resolve(true);
+        } catch (error) {
+          return Promise.resolve(false);
+        }
       })
       .getArgument('quality')
-      .registerAutocompleteListener((query, args) => {
-        return util.qualityProfile(args.device.getSetting('ssl'), args.device.getSetting('address'), args.device.getSetting('port'), '/api/profile', args.device.getSetting('apikey'), 'sonarr');
+      .registerAutocompleteListener(async (query, args) => {
+        return await this.util.qualityProfile(args.device.getSetting('ssl'), args.device.getSetting('address'), args.device.getSetting('port'), '/api/profile', args.device.getSetting('apikey'), 'sonarr');
       })
 
-    new Homey.FlowCardAction('sonarr_calendar')
-      .register()
-      .registerRunListener((args, state) => {
-        util.calendar(args)
-          .then(result => {
+    this.homey.flow.getActionCard('sonarr_calendar')
+      .registerRunListener(async (args) => {
+        try {
+          const result = await this.util.calendar(args);
+          if (result) {
             var episodes = JSON.parse(result);
             if (episodes.length > 0) {
-              Homey.ManagerSpeechOutput.say(Homey.__("Future episode are"));
-
-              episodes.forEach( function(episode) {
+              this.homey.speechOutput.say(this.homey.__("app.future_episodes_are"));
+              episodes.forEach((episode) => {
                 var serie = episode.series.title;
                 var season = episode.seasonNumber;
                 var episodenumber = episode.episodeNumber;
                 var title = episode.title;
                 var airdate = episode.airDate;
-
-                Homey.ManagerSpeechOutput.say(Homey.__(", season episode titled with airdate", { "serie": serie, "season": season, "episode": episodenumber, "title": title, "airdate": airdate }));
+                this.homey.speechOutput.say(this.homey.__("app.season_episode_titled", { "serie": serie, "season": season, "episode": episodenumber, "title": title, "airdate": airdate }));
               });
             } else {
-              Homey.ManagerSpeechOutput.say(Homey.__("No episodes found"));
+              this.homey.speechOutput.say(this.homey.__("app.no_episodes_found"));
             }
             return Promise.resolve(true);
-          })
-          .catch(error => {
-            return Promise.reject(error);
-          })
+          }
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
-    new Homey.FlowCardAction('sonarr_refresh')
-      .register()
-      .registerRunListener((args, state) => {
-        var command = '{"name": "RefreshSeries"}';
-        util.command(args, command)
-          .then(result => {
-            return Promise.resolve(result);
-          })
-          .catch(error => {
-            return Promise.reject(error);
-          })
+    this.homey.flow.getActionCard('sonarr_refresh')
+      .registerRunListener(async (args) => {
+        try {
+          const command = '{"name": "RefreshSeries"}';
+          const result = await this.util.sendCommand(args, command);
+          return Promise.resolve(true);
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
-    new Homey.FlowCardAction('sonarr_queue')
-      .register()
-      .registerRunListener((args, state) => {
-        util.queue(args)
-          .then(result => {
+    this.homey.flow.getActionCard('sonarr_queue')
+      .registerRunListener(async (args) => {
+        try {
+          const result = await this.util.queue(args);
+          if (result) {
             var downloads = JSON.parse(result);
             if (downloads.length > 0) {
-              Homey.ManagerSpeechOutput.say(Homey.__("Current downloads are"));
+              this.homey.speechOutput.say(this.homey.__("app.current_downloads_are"));
 
-              downloads.forEach( function(download) {
+              downloads.forEach((download) => {
                 var serie = download.series.title;
                 var season = download.episode.seasonNumber;
                 var episodenumber = download.episode.episodeNumber;
                 var title = download.episode.title;
                 var airdate = download.episode.airDate;
 
-                Homey.ManagerSpeechOutput.say(Homey.__(", season episode titled with airdate", { "serie": serie, "season": season, "episode": episodenumber, "title": title, "airdate": airdate }));
+                this.homey.speechOutput.say(this.homey.__("app.season_episode_titled", { "serie": serie, "season": season, "episode": episodenumber, "title": title, "airdate": airdate }));
               });
             } else {
-              Homey.ManagerSpeechOutput.say(Homey.__("No current downloads"));
+              this.homey.speechOutput.say(this.homey.__("app.no_current_downloads"));
             }
             return Promise.resolve();
-          })
-          .catch(error => {
-            return Promise.reject(error);
-          })
+          }
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
 
-    new Homey.FlowCardAction('sonarr_history')
-      .register()
-      .registerRunListener((args, state) => {
-        util.history(args)
-          .then(result => {
+    this.homey.flow.getActionCard('sonarr_history')
+      .registerRunListener(async (args) => {
+        try {
+          const result = await this.util.history(args);
+          if (result) {
             var data = JSON.parse(result);
             var items = data.records;
             if (items.length > 0) {
-              Homey.ManagerSpeechOutput.say(Homey.__("Recently grabbed episodes are"));
-
-              items.forEach( function(item) {
+              this.homey.speechOutput.say(this.homey.__("app.recently_grabbed_episodes_are"));
+              items.forEach((item) => {
                 var serie = item.series.title;
                 var season = item.episode.seasonNumber;
                 var episodenumber = item.episode.episodeNumber;
                 var title = item.episode.title;
                 var grabdate = item.date;
                 var grabdateFiltered = grabdate.substring(0,10);
-
-                Homey.ManagerSpeechOutput.say(Homey.__(", season episode titled with grabdate", { "serie": serie, "season": season, "episode": episodenumber, "title": title, "grabdate": grabdateFiltered }));
+                this.homey.speechOutput.say(this.homey.__("app.season_episode_titled", { "serie": serie, "season": season, "episode": episodenumber, "title": title, "grabdate": grabdateFiltered }));
               });
             } else {
-              Homey.ManagerSpeechOutput.say(Homey.__("No episodes found"));
+              this.homey.speechOutput.say(this.homey.__("app.no_episodes_found"));
             }
             return Promise.resolve();
-          })
-          .catch(error => {
-            return Promise.reject(error);
-          })
+          }
+        } catch (error) {
+          return Promise.reject(error);
+        }
       })
   }
 

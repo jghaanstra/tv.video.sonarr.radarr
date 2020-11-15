@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-Homey.setTitle( __('pair.title') );
+Homey.setTitle(Homey.__('pair.title'));
 
 $(function() {
   $('#test-connection').click(function() {
@@ -9,8 +9,8 @@ $(function() {
     $('.radarr-error').hide();
 
 		var inputaddress = $('#address').val();
-    var inputport = Number($('#port').val());
-		var inputssl = $('#ssl').is(":checked") ? 'https://' : 'http://';
+		var inputport = Number($('#port').val());
+    var inputssl = $('#ssl').is(":checked") ? 'https://' : 'http://';
     var inputapikey = $('#apikey').val();
 
     if( inputaddress != '' && inputport != '' && inputapikey != '') {
@@ -21,17 +21,17 @@ $(function() {
         apikey: inputapikey
       };
 
-      Homey.emit('testConnection', device_data, function(error, result) {
-        if(error) {
-          $('.radarr-error').show();
-          $('.radarr-error-msg').html(error);
-        } else {
+      Homey.emit('testConnection', device_data)
+        .then(result => {
           var data = JSON.parse(result);
           $('#rootfolder').val(data[0].path);
           $('.radarr-test').show();
           $('#connect').prop('disabled', false);
-        }
-      });
+        })
+        .catch(error => {
+          $('.radarr-error').show();
+          $('.radarr-error-msg').html(error);
+        })
     } else {
       $('.radarr-error').show();
       $('.radarr-error-msg').html( __('pair.nosettings') );
@@ -57,22 +57,22 @@ $(function() {
         rootfolder: inputrootfolder
       };
 
-      Homey.addDevice({
-        name  	 : 'Radarr',
-        data 	 : device_data,
-        settings : settings
-      }, function(error, result ) {
-        if (error) {
+      Homey.createDevice({
+        name: 'Radarr',
+        data: device_data,
+        settings: settings
+      })
+        .then(result => {
+          $('.radarr-test').hide();
+          $('.radarr-ok').show();
+          $('.radarr-error').hide();
+          Homey.done();
+        })
+        .catch(error => {
           $('.radarr-test').hide();
           $('.radarr-error').show();
           $('.radarr-error-msg').html( error.message || error.toString() );
-        }
-        $('.radarr-test').hide();
-        $('.radarr-ok').show();
-
-        Homey.done();
-      })
-
+        })
     } else {
       $('.radarr-test').hide();
       $('.radarr-error').show();
@@ -118,7 +118,7 @@ $(function() {
 </div>
 <div class="form-group">
 	<label for="port" data-i18n="pair.port">Port</label>
-	<input type="number" class="form-control" id="port" placeholder="8310">
+	<input type="number" class="form-control" id="port" placeholder="8989">
 </div>
 <div class="form-group">
 	<label for="ssl" data-i18n="pair.ssl">Use HTTPS?</label>
@@ -135,7 +135,7 @@ $(function() {
 </div>
 
 <div class="messages">
-  <p class="radarr-status radarr-test" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.testing">Connection test successfull, you can now connect Radarr.</span></p>
-  <p class="radarr-status radarr-ok" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.success">Radarr added succesfully.</span></p>
+  <p class="radarr-status radarr-test" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.testing">Connection test successfull, you can now connect radarr.</span></p>
+  <p class="radarr-status radarr-ok" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.success">radarr added succesfully.</span></p>
   <p class="radarr-status radarr-error" style="color: #ff6300;"><i class="fa fa-times"></i> <span class="radarr-error-msg"></span></p>
 </div>

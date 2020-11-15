@@ -1,6 +1,6 @@
 {
 	"id": "tv.video.sonarr.radarr",
-  "sdk": 2,
+  "sdk": 3,
   "brandColor": "#A27B1E",
 	"name": {
 		"en": "Sonarr, Radarr & Lidarr",
@@ -10,8 +10,8 @@
 		"en": [ "Sonarr", "Radarr", "Lidarr", "tv shows", "movies", "download" ],
 		"nl": [ "Sonarr", "Radarr", "Lidarr", "tv series", "films", "download" ]
 	},
-	"version": "2.1.1",
-	"compatibility": ">=3.0.0",
+	"version": "3.0.0",
+	"compatibility": ">=5.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
 		"email": "homey@solidewebservices.com",
@@ -46,6 +46,13 @@
     "homey:manager:speech-input",
     "homey:manager:speech-output"
   ],
+  "api": {
+    "eventTrigger": {
+      "method": "get",
+      "path": "/:event",
+      "public": true
+    }
+  },
 	"drivers": [
     {
 			"id": "sonarr",

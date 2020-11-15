@@ -1,10 +1,10 @@
 {
   "name": "tv.video.sonarr.radarr",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Sonarr and Radarr app for Homey",
   "main": "app.js",
   "dependencies": {
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {},
   "scripts": {

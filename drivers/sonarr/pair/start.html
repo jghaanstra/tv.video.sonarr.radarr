@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-Homey.setTitle( __('pair.title') );
+Homey.setTitle(Homey.__('pair.title'));
 
 $(function() {
   $('#test-connection').click(function() {
@@ -21,17 +21,17 @@ $(function() {
         apikey: inputapikey
       };
 
-      Homey.emit('testConnection', device_data, function(error, result) {
-        if(error) {
-          $('.sonarr-error').show();
-          $('.sonarr-error-msg').html(error);
-        } else {
+      Homey.emit('testConnection', device_data)
+        .then(result => {
           var data = JSON.parse(result);
           $('#rootfolder').val(data[0].path);
           $('.sonarr-test').show();
           $('#connect').prop('disabled', false);
-        }
-      });
+        })
+        .catch(error => {
+          $('.sonarr-error').show();
+          $('.sonarr-error-msg').html(error);
+        })
     } else {
       $('.sonarr-error').show();
       $('.sonarr-error-msg').html( __('pair.nosettings') );
@@ -57,22 +57,22 @@ $(function() {
         rootfolder: inputrootfolder
       };
 
-      Homey.addDevice({
-        name  	 : 'Sonarr',
-        data 	 : device_data,
-        settings : settings
-      }, function(error, result ) {
-        if (error) {
+      Homey.createDevice({
+        name: 'Sonarr',
+        data: device_data,
+        settings: settings
+      })
+        .then(result => {
+          $('.sonarr-test').hide();
+          $('.sonarr-ok').show();
+          $('.sonarr-error').hide();
+          Homey.done();
+        })
+        .catch(error => {
           $('.sonarr-test').hide();
           $('.sonarr-error').show();
           $('.sonarr-error-msg').html( error.message || error.toString() );
-        }
-        $('.sonarr-test').hide();
-        $('.sonarr-ok').show();
-
-        Homey.done();
-      })
-
+        })
     } else {
       $('.sonarr-test').hide();
       $('.sonarr-error').show();
@@ -122,7 +122,7 @@ $(function() {
 </div>
 <div class="form-group">
 	<label for="ssl" data-i18n="pair.ssl">Use HTTPS?</label>
-	<input type="checkbox" class="form-control" id="ssl" value="SSL">
+	<input type="checkbox" class="form-control" id="ssl" value="false">
 </div>
 <div class="form-group">
 	<label for="apikey" data-i18n="pair.apikey">API Key</label>
@@ -135,7 +135,7 @@ $(function() {
 </div>
 
 <div class="messages">
-  <p class="sonarr-status sonarr-test" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.testing">Connection test successfull, you can now connect Sonarr.</span></p>
-  <p class="sonarr-status sonarr-ok" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.success">Sonarr added succesfully.</span></p>
+  <p class="sonarr-status sonarr-test" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.testing">Connection test successfull, you can now connect sonarr.</span></p>
+  <p class="sonarr-status sonarr-ok" style="color: #008C23;"><i class="fa fa-check"></i> <span data-i18n="pair.success">sonarr added succesfully.</span></p>
   <p class="sonarr-status sonarr-error" style="color: #ff6300;"><i class="fa fa-times"></i> <span class="sonarr-error-msg"></span></p>
 </div>

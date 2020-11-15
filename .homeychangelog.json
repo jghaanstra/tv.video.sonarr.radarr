@@ -7,5 +7,8 @@
   },
   "2.1.1": {
     "en": "Add SSL (https) support for Sonarr, Radarr or Lidarr installations. Re-pair or edit device settings to enable."
+  },
+  "3.0.0": {
+    "en": "Update to SDK3 (requires Homey firmware 5.x) and minor improvements."
   }
 }

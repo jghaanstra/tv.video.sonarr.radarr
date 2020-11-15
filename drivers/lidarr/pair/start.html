@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-Homey.setTitle( __('pair.title') );
+Homey.setTitle(Homey.__('pair.title'));
 
 $(function() {
   $('#test-connection').click(function() {
@@ -21,17 +21,17 @@ $(function() {
         apikey: inputapikey
       };
 
-      Homey.emit('testConnection', device_data, function(error, result) {
-        if(error) {
-          $('.lidarr-error').show();
-          $('.lidarr-error-msg').html(error);
-        } else {
+      Homey.emit('testConnection', device_data)
+        .then(result => {
           var data = JSON.parse(result);
           $('#rootfolder').val(data[0].path);
           $('.lidarr-test').show();
           $('#connect').prop('disabled', false);
-        }
-      });
+        })
+        .catch(error => {
+          $('.lidarr-error').show();
+          $('.lidarr-error-msg').html(error);
+        })
     } else {
       $('.lidarr-error').show();
       $('.lidarr-error-msg').html( __('pair.nosettings') );
@@ -57,22 +57,22 @@ $(function() {
         rootfolder: inputrootfolder
       };
 
-      Homey.addDevice({
-        name  	 : 'Lidarr',
-        data 	 : device_data,
-        settings : settings
-      }, function(error, result ) {
-        if (error) {
+      Homey.createDevice({
+        name: 'Lidarr',
+        data: device_data,
+        settings: settings
+      })
+        .then(result => {
+          $('.lidarr-test').hide();
+          $('.lidarr-ok').show();
+          $('.lidarr-error').hide();
+          Homey.done();
+        })
+        .catch(error => {
           $('.lidarr-test').hide();
           $('.lidarr-error').show();
           $('.lidarr-error-msg').html( error.message || error.toString() );
-        }
-        $('.lidarr-test').hide();
-        $('.lidarr-ok').show();
-
-        Homey.done();
-      })
-
+        })
     } else {
       $('.lidarr-test').hide();
       $('.lidarr-error').show();
