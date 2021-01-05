@@ -1,6 +1,6 @@
 {
   "name": "tv.video.sonarr.radarr",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Sonarr and Radarr app for Homey",
   "main": "app.js",
   "dependencies": {
