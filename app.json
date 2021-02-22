@@ -10,7 +10,7 @@
 		"en": [ "Sonarr", "Radarr", "Lidarr", "tv shows", "movies", "download" ],
 		"nl": [ "Sonarr", "Radarr", "Lidarr", "tv series", "films", "download" ]
 	},
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"compatibility": ">=5.0.0",
 	"author": {
 		"name": "Jelger Haanstra",
@@ -31,8 +31,9 @@
   "source": "https://github.com/jghaanstra/tv.video.sonarr.radarr",
   "homepage": "https://community.athom.com/t/120",
   "images": {
+    "small": "./assets/images/small.jpg",
     "large": "./assets/images/large.jpg",
-    "small": "./assets/images/small.jpg"
+    "xlarge": "./assets/images/xlarge.jpg"
   },
 	"category": "internet",
 	"description": {
@@ -61,8 +62,8 @@
 				"nl": "Sonarr"
 			},
 			"images": {
-				"large": "drivers/sonarr/assets/images/large.jpg",
-				"small": "drivers/sonarr/assets/images/small.jpg"
+				"small": "drivers/sonarr/assets/images/small.jpg",
+        "large": "drivers/sonarr/assets/images/large.jpg"
 			},
 			"class": "other",
       "capabilities": [
